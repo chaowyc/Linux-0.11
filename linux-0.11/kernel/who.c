@@ -6,6 +6,9 @@
 #define MAXNUM 32
 _syscall1(int, iam, const char*, name);		/* iam()在用户空间的接口函数 */
 _syscall2(int, whoami,char*,name,unsigned int,size);	/* whoami()在用户空间的接口函数 */
+
+
+
 char usname[MAXNUM];
 
 int sys_iam(const char* name)
@@ -17,8 +20,7 @@ int sys_iam(const char* name)
 		cnt++;
 	if(cnt > 23)
 	{
-		errno = EINVAL;
-		return -1;
+		return -EINVAL;
 	}
 	for(ans = 0; ans <= cnt; ans++)
 		usname[ans] = get_fs_byte(name + ans);
@@ -34,8 +36,7 @@ int sys_whoami(char* name, unsigned int size)
 		cnt++;
 	if(cnt > size)
 	{
-		errno = EINVAL;
-		return -1;
+		return -EINVAL;
 	}
 	
 	for(ans = 0; ans <= cnt; ans++)
