@@ -57,6 +57,15 @@
 
 #ifdef __LIBRARY__
 
+#define NR_SEMAPHORE    64
+#define NR_SEMANAME    255
+typedef struct semaphore 
+{ 
+    char sem_name[NR_SEMANAME]; 
+    int value; 
+    struct task_struct * semp; 
+}sem_t;
+
 #define __NR_setup	0	/* used only by init, to get system going */
 #define __NR_exit	1
 #define __NR_fork	2
@@ -129,6 +138,12 @@
 #define __NR_ssetmask	69
 #define __NR_setreuid	70
 #define __NR_setregid	71
+
+#define __NR_sem_open   72
+#define __NR_sem_wait	73
+#define __NR_sem_post   74
+#define __NR_sem_unlink	75
+#define __NR_sem_getvalue 76
 
 #define _syscall0(type,name) \
 type name(void) \

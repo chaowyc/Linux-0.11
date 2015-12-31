@@ -69,6 +69,9 @@ int sys_fcntl(unsigned int fd, unsigned int cmd, unsigned long arg)
 			return 0;
 		case F_GETLK:	case F_SETLK:	case F_SETLKW:
 			return -1;
+		case F_CHSIZE:
+            current->filp[fd]->f_inode->i_size=arg; 
+            return 0;
 		default:
 			return -1;
 	}
