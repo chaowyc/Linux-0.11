@@ -3,7 +3,7 @@
 #include <time.h>
 #include <sys/times.h>
 
-#define HZ	200
+#define HZ 100
 
 void cpuio_bound(int last, int cpu_time, int io_time);
 
@@ -11,7 +11,7 @@ int main(int argc, char * argv[])
 {
 	if(!fork())
 	{
-		cpuio_bound(10, 1, 9);
+		cpuio_bound(10, 1, 0);
 	}
 	if(!fork())
 	{
@@ -25,7 +25,6 @@ int main(int argc, char * argv[])
 	{
 		cpuio_bound(10, 1, 9);
 	}
-
 	return 0;
 }
 
