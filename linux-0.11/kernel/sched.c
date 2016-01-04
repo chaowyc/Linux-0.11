@@ -411,11 +411,11 @@ void sched_init(void)
 	set_system_gate(0x80,&system_call);
 }
 
-f12_state=0;
+f12_state = 0; //show normally at first
 void switch_f12(void)
 {
-    if(f12_state==1)
-        f12_state=0;
+    if (f12_state == 1)
+        f12_state = 0;
     else
-        f12_state=1;
+        f12_state = 1;
 }
