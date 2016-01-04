@@ -74,7 +74,6 @@ int main(void)
 
     if(!fork()) 
     { 
-        printf("producer process %u !now itemValue=%d\n",getpid(),itemValue); 
 
         while(itemValue<50) 
         { 

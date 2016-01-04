@@ -4,6 +4,7 @@
 #include    <fcntl.h> 
 #include    <linux/types.h> 
 #include    <sys/stat.h> 
+#include <semaphore.h>
 
 #define BUFFERSIZE    10 
 
@@ -56,7 +57,7 @@ int main(void)
          */
     if(!fork()) 
     { 
-        printf("producer process %u !now itemValue=%d\n",getpid(),itemValue); 
+        //printf("producer process %u !now itemValue=%d\n",getpid(),itemValue); 
         while(itemValue<50) //根据实验要求，这里是499就不输出500
         { 
             itemValue++; 
@@ -102,7 +103,7 @@ int main(void)
     { 
         if(!fork()) 
         { 
-            //printf("customer process(%u) begin to run!\n",getpid()); 
+            printf("customer process(%u) begin to run!\n",getpid()); 
             while(1) 
             { 
                 if(sem_wait(full)!=0) 
