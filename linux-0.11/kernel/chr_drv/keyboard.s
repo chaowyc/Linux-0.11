@@ -1,5 +1,5 @@
 # 1 "keyboard.S"
-# 1 "/home/saasbook/oslab5/linux-0.11/kernel/chr_drv//"
+# 1 "/home/saasbook/newoslab/Linux-0.11/linux-0.11/kernel/chr_drv//"
 # 1 "<built-in>"
 # 1 "<command line>"
 # 1 "keyboard.S"
@@ -240,49 +240,40 @@ cur_table:
 
 func:
 
-# 220 "keyboard.S"
+	cmpb $0x58,%al
+	jne continue_func
+	pushl %eax
+  pushl %ecx
+  pushl %edx
+  call switch_f12
+  popl %edx
+  popl %ecx
+  popl %eax
+  jmp end_func
+continue_func:
+
+	pushl %eax
+	pushl %ecx
+	pushl %edx
+	call show_stat
+	popl %edx
+	popl %ecx
+	popl %eax
 	subb $0x3B,%al
 	jb end_func
 	cmpb $9,%al
-	
-	jbe ok_stat
+	jbe ok_func
 	subb $18,%al
 	cmpb $10,%al
-
 	jb end_func
-
 	cmpb $11,%al
 	ja end_func
-
-
-ok_f12:
-    pushl %eax
-    pushl %ecx
-    pushl %edx
-    call switch_f12
-    popl %edx
-    popl %ecx
-    popl %eax
-    jmp ok_func
-
-ok_stat:
-    pushl %eax
-    pushl %ecx
-    pushl %edx
-    call show_stat
-    popl %edx
-    popl %ecx
-    popl %eax
-
 ok_func:
 	cmpl $4,%ecx		
 	jl end_func
-
-ok_put_queue:
-    movl func_table(,%eax,4),%eax
-    xorl %ebx,%ebx
-    jmp put_queue
-
+	movl func_table(,%eax,4),%eax
+	xorl %ebx,%ebx
+	jmp put_queue
 end_func:
 	ret
 
@@ -294,7 +285,7 @@ func_table:
 	.long 0x455b5b1b,0x465b5b1b,0x475b5b1b,0x485b5b1b
 	.long 0x495b5b1b,0x4a5b5b1b,0x4b5b5b1b,0x4c5b5b1b
 
-# 323 "keyboard.S"
+# 307 "keyboard.S"
 
 key_map:
 	.byte 0,27
@@ -345,7 +336,7 @@ alt_map:
 	.byte '|
 	.fill 10,1,0
 
-# 478 "keyboard.S"
+# 462 "keyboard.S"
 
 
 

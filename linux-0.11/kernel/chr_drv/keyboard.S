@@ -208,7 +208,19 @@ cur_table:
  * this routine handles function keys
  */
 func:
-/*
+
+	cmpb $0x58,%al
+	jne continue_func
+	pushl %eax
+  pushl %ecx
+  pushl %edx
+  call switch_f12
+  popl %edx
+  popl %ecx
+  popl %eax
+  jmp end_func
+continue_func:
+
 	pushl %eax
 	pushl %ecx
 	pushl %edx
@@ -216,49 +228,21 @@ func:
 	popl %edx
 	popl %ecx
 	popl %eax
-	*/
 	subb $0x3B,%al
 	jb end_func
 	cmpb $9,%al
-	/*jbe ok_func*/
-	jbe ok_stat
+	jbe ok_func
 	subb $18,%al
 	cmpb $10,%al
-
 	jb end_func
-
 	cmpb $11,%al
 	ja end_func
-
-
-ok_f12:
-    pushl %eax
-    pushl %ecx
-    pushl %edx
-    call switch_f12
-    popl %edx
-    popl %ecx
-    popl %eax
-    jmp ok_func
-
-ok_stat:
-    pushl %eax
-    pushl %ecx
-    pushl %edx
-    call show_stat
-    popl %edx
-    popl %ecx
-    popl %eax
-
 ok_func:
 	cmpl $4,%ecx		/* check that there is enough room */
 	jl end_func
-
-ok_put_queue:
-    movl func_table(,%eax,4),%eax
-    xorl %ebx,%ebx
-    jmp put_queue
-
+	movl func_table(,%eax,4),%eax
+	xorl %ebx,%ebx
+	jmp put_queue
 end_func:
 	ret
 

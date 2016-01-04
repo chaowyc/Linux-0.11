@@ -460,7 +460,7 @@ void con_write(struct tty_struct * tty)
 					}
 
 					if((c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z') && f12_state==1)
-                        c='*';
+            c='*';
 
 					__asm__("movb attr,%%ah\n\t"
 						"movw %%ax,%1\n\t"
