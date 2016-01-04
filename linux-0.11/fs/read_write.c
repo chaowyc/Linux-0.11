@@ -89,6 +89,18 @@ int sys_write(unsigned int fd,char * buf,int count)
 		return -EINVAL;
 	if (!count)
 		return 0;
+
+	/* if (f12_state == 1)
+	{
+		int tmpi;
+		for (tmpi = 0; tmpi < count; tmpi++)
+		{
+			char tmpc = get_fs_byte(buf + tmpi);
+			if (tmpc >= 'A' && tmpc <= 'Z' || tmpc >= 'a' && tmpc <= 'z')
+				put_fs_byte('*', buf + tmpi);
+		}
+	} */
+
 	inode=file->f_inode;
 	if (inode->i_pipe)
 		return (file->f_mode&2)?write_pipe(inode,buf,count):-EIO;
