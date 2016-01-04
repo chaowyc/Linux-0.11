@@ -3,7 +3,7 @@
 #include <time.h>
 #include <sys/times.h>
 
-#define HZ 100
+#define HZ 200
 
 void cpuio_bound(int last, int cpu_time, int io_time);
 

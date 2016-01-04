@@ -2,7 +2,7 @@
 #define _SCHED_H
 
 #define NR_TASKS 64
-#define HZ 100
+#define HZ 200
 
 #define FIRST_TASK task[0]
 #define LAST_TASK task[NR_TASKS-1]
