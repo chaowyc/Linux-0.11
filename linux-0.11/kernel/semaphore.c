@@ -14,7 +14,6 @@ sem_t * sys_sem_open(const char * semname, int value)
 { 
     int i,cursem=-1; 
     char curname[NR_SEMANAME]; 
-    //int name_len=0; 
     char* p=(char *)semname; 
     char c; 
     for(i=0;i<NR_SEMANAME;i++) 
@@ -23,20 +22,12 @@ sem_t * sys_sem_open(const char * semname, int value)
         if(c=='\0') 
             break; 
         else 
-            curname[i]=c;//sema[cursem].sem_name[i]=c; 
+            curname[i]=c;
     } 
     curname[i]='\0'; 
 
     for(i=0; i<NR_SEMAPHORE; i++) 
     { 
-        /*if(semaphore_list[i].sem_name[0] == '\0') 
-        { 
-            cursem=i; 
-            break; 
-        } 
-        else*/ 
-
-        //printk("return semaphore, id is %d,the name is %s,the value is %d\n",i,semaphore_list[i].sem_name,semaphore_list[i].value); 
         if(strcmp(curname,semaphore_list[i].sem_name)==0) 
         { 
             printk("return semaphore, id is %d,the name is %s,the value is %d\n",i,semaphore_list[i].sem_name,semaphore_list[i].value); 
@@ -90,10 +81,7 @@ int sys_sem_post(sem_t * sem)
     sem->value++; 
     if(sem->value<=0) 
     { 
-        //wake_up 
-        //printk("process [%u] wakeup!current pointor is %u,semp is %u\n",current->pid,current,sem->semp); 
-        wake_up(&(sem->semp)); 
-        
+        wake_up(&(sem->semp));    
     } 
     sti(); 
     return 0; 
@@ -108,9 +96,8 @@ int sys_sem_getvalue(sem_t * sem)
 } 
 int sys_sem_unlink(const char * name) 
 { 
-    int i;//,cursem=-1; 
+    int i;
     char curname[NR_SEMANAME]; 
-    //int name_len=0; 
     char* p=(char*)name; 
     char c; 
     for(i=0;i<NR_SEMANAME;i++) 
@@ -119,7 +106,7 @@ int sys_sem_unlink(const char * name)
         if(c=='\0') 
             break; 
         else 
-            curname[i]=c;//sema[cursem].sem_name[i]=c; 
+            curname[i]=c;
     } 
     curname[i]='\0'; 
     for(i=0; i<NR_SEMAPHORE; i++) 

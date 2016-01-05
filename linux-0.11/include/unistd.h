@@ -57,6 +57,16 @@
 
 #ifdef __LIBRARY__
 
+#define    NR_SHM    64
+
+struct shmid_ds
+{
+    int key;
+    int size;
+    unsigned long page;
+    int attached;
+};
+
 #define NR_SEMAPHORE    64
 #define NR_SEMANAME    255
 typedef struct semaphore 
@@ -145,6 +155,10 @@ typedef struct semaphore
 #define __NR_sem_unlink	75
 #define __NR_sem_getvalue 76
 
+#define __NR_shmget		77
+#define __NR_shmdt      78
+#define __NR_shmat      79
+#define __NR_shmctl     80
 #define _syscall0(type,name) \
 type name(void) \
 { \

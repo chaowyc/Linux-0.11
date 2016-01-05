@@ -429,3 +429,15 @@ void calc_mem(void)
 		}
 	}
 }
+
+void remove_page(long addr)
+{
+    unsigned long * page_table;
+
+    page_table=(unsigned long*)((addr>>20)&0xffc); //取目录地址
+    if((*page_table) & 1) //如果对应页面在内存中存在，则取出页地址
+        page_table=(unsigned long *)(0xfffff000 & *page_table);
+
+    page_table[(addr>>12)&0x3ff]=0; //去掉页中存在的内存地址
+
+}

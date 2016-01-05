@@ -16,7 +16,7 @@ CPP	=gcc-3.4 -E -nostdinc -I../include
 	$(CC) $(CFLAGS) \
 	-S -o $*.s $<
 
-OBJS	= memory.o page.o
+OBJS	= memory.o page.o shm.o
 
 all: mm.o
 
@@ -33,6 +33,10 @@ dep:
 	cp tmp_make Makefile
 
 ### Dependencies:
+shm.s shm.o:shm.c ../include/unistd.h ../include/errno.h \
+../include/stdarg.h ../include/linux/sched.h ../include/asm/segment.h \
+../include/string.h ../include/linux/kernel.h
+
 memory.o: memory.c ../include/signal.h ../include/sys/types.h \
   ../include/asm/system.h ../include/linux/sched.h \
   ../include/linux/head.h ../include/linux/fs.h ../include/linux/mm.h \
