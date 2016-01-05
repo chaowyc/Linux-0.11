@@ -1,5 +1,5 @@
 # 1 "keyboard.S"
-# 1 "/home/saasbook/oslab3/linux-0.11/kernel/chr_drv//"
+# 1 "/home/saasbook/newoslab/Linux-0.11/linux-0.11/kernel/chr_drv//"
 # 1 "<built-in>"
 # 1 "<command line>"
 # 1 "keyboard.S"

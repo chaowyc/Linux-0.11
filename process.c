@@ -3,29 +3,36 @@
 #include <time.h>
 #include <sys/times.h>
 
-#define HZ 200
+#define HZ 100
 
 void cpuio_bound(int last, int cpu_time, int io_time);
 
 int main(int argc, char * argv[])
 {
-	if(!fork())
+	pid_t child[5];
+	int i;
+
+	for (i = 0; i < 5; i++)
 	{
-		cpuio_bound(10, 1, 0);
+		child[i] = fork();
+		if (child[i] < 0)
+		{
+			printf("An error occurred in forking!\n");
+			return 1;
+		}
+		if (child[i] == 0)
+		{
+			cpuio_bound(4, i, 4 - i);
+			return 0;
+		}
+		printf("Child Process ID: %d\n", child[i]);
 	}
-	if(!fork())
+	for (i = 0; i < 5; i++)
 	{
-		cpuio_bound(10, 0, 1);
+		wait(NULL);
+		printf("%d over.\n", i);
 	}
-	if(!fork())
-	{
-		cpuio_bound(10, 1, 1);
-	}
-	if(!fork())
-	{
-		cpuio_bound(10, 1, 9);
-	}
-	return 0;
+ 	return 0;
 }
 
 /*
